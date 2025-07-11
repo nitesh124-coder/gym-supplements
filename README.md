@@ -25,7 +25,7 @@ This is a GYM SUPPLEMENTS AND NUTRITION PRODUCT e-commerce website built using P
 ### Option 1: Automated Setup (Recommended)
 ```bash
 # Clone the repository
-git clone <repository-url>
+https://github.com/nitesh124-coder/job-resume-analyzer
 cd gym-supplements-nutrition-product
 
 # Run the automated setup script
@@ -35,7 +35,7 @@ python setup.py
 ### Option 2: Manual Setup
 ```bash
 # Clone the repository
-git clone <repository-url>
+https://github.com/nitesh124-coder/job-resume-analyzer
 cd gym-supplements-nutrition-product
 
 # Install dependencies
