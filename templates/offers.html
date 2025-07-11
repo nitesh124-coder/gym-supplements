@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Offers - GYM SUPPLEMENTS AND NUTRITION PRODUCT{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4">Special Offers</h2>
+
+    <div class="row">
+        <!-- Example Offer Card 1 -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-warning">Limited Time Offer: 20% Off All Whey Proteins!</h5>
+                    <p class="card-text">Boost your gains with our premium whey protein selection. Discount applied automatically at checkout.</p>
+                    <a href="{{ url_for('products', category='whey protein') }}" class="btn btn-outline-warning">Shop Whey Protein</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Example Offer Card 2 -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-danger">Buy One Get One 50% Off on Mass Gainers!</h5>
+                    <p class="card-text">Bulk up faster with this incredible deal on our popular mass gainers.</p>
+                    <a href="{{ url_for('products', category='gainer') }}" class="btn btn-outline-danger">Shop Mass Gainers</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Example Offer Card 3 -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-success">Free Shaker with any Pre-Workout Purchase over ₹1000!</h5>
+                    <p class="card-text">Get energized and get a free shaker bottle to mix your favorite pre-workout.</p>
+                     <a href="{{ url_for('products', category='preworkout') }}" class="btn btn-outline-success">Shop Pre-Workouts</a>
+                </div>
+            </div>
+        </div>
+
+         <!-- Example Offer Card 4 -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-info">Flat 15% Off on all Accessories!</h5>
+                    <p class="card-text">Upgrade your training gear with this site-wide discount on all accessories.</p>
+                     <a href="{{ url_for('products', category='accessories') }}" class="btn btn-outline-info">Shop Accessories</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Add more offers here -->
+
+</div>
+{% endblock %}

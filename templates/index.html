@@ -1,0 +1,476 @@
+{% extends 'base.html' %}
+
+{% block title %}GYM SUPPLEMENTS AND NUTRITION PRODUCT - Home{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero-banner {
+        position: relative;
+        overflow: hidden;
+        /* Adjust height as needed */
+        min-height: 400px;
+        background-color: #f8f9fa; /* Fallback color */
+        display: flex;
+        align-items: center;
+        background-size: cover;
+        background-position: center;
+        transition: background-image 1s ease-in-out;
+    }
+
+    .hero-content {
+        z-index: 1;
+        /* Adjust padding/margins as needed */
+        padding: 60px 0;
+    }
+
+     .hero-banner .container {
+        position: relative;
+        z-index: 2; /* Ensure content is above background */
+    }
+
+     /* Optional: Add an overlay to make text more readable */
+    .hero-banner::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.3); /* Dark overlay */
+        z-index: 1;
+    }
+
+    .hero-content h1, .hero-content p, .hero-content a {
+        color: white !important; /* Ensure text is readable on dark overlay */
+    }
+
+     /* Hide the image on smaller screens if using background image */
+    .hero-image-col {
+        display: none;
+    }
+
+    @media (min-width: 768px) {
+        .hero-banner {
+            /* Reset background properties if using separate image */
+             background-image: none;
+             background-color: #f8f9fa;
+        }
+         .hero-banner::before {
+             content: none;
+         }
+         .hero-content h1, .hero-content p, .hero-content a {
+            color: inherit !important; /* Revert text color */
+        }
+         .hero-image-col {
+            display: block;
+        }
+    }
+
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Banner -->
+<div class="hero-banner">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <div class="hero-content text-dark">
+                    <h1 class="display-4 fw-bold mb-3">Build Your Dream Physique</h1>
+                    <p class="lead mb-4">High-quality sports nutrition products to fuel your fitness journey.</p>
+                    <a href="{{ url_for('products', category='whey protein') }}" class="btn btn-warning btn-lg">Shop Now</a>
+                </div>
+            </div>
+            <div class="col-md-6 d-none d-md-block" id="hero-image-container" data-image-urls='{{ [
+                url_for("static", filename="images/slideshow/IMG-20250527-WA0001.jpg"),
+                url_for("static", filename="images/slideshow/IMG-20250527-WA0002.jpg"),
+                url_for("static", filename="images/slideshow/IMG-20250527-WA0003.jpg"),
+                url_for("static", filename="images/slideshow/IMG-20250527-WA0004.jpg"),
+                url_for("static", filename="images/slideshow/IMG-20250527-WA0006.jpg")
+            ] | tojson }}'>
+                <!-- Image for slideshow -->
+                <img src="{{ url_for('static', filename='images/slideshow/IMG-20250527-WA0001.jpg') }}" alt="Build Your Dream Physique" class="img-fluid rounded" id="hero-banner-image">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Categories Section -->
+<section class="py-5 bg-white">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Shop by Category</h2>
+            <a href="{{ url_for('categories') }}" class="btn btn-outline-warning">View All Categories</a>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <a href="{{ url_for('products', category='whey protein') }}" class="text-decoration-none">
+                    <div class="category-card">
+                        <div class="category-img">
+                            <img src="{{ url_for('static', filename='images/whey protein/dymatize.jpg') }}" class="img-fluid" alt="Whey Protein">
+                        </div>
+                        <div class="card-body text-center">
+                            <h5 class="mb-0">Whey Protein</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="{{ url_for('products', category='gainer') }}" class="text-decoration-none">
+                    <div class="category-card">
+                        <div class="category-img">
+                            <img src="{{ url_for('static', filename='images/gainer/serious mass.jpg') }}" class="img-fluid" alt="Mass Gainers">
+                        </div>
+                        <div class="card-body text-center">
+                            <h5 class="mb-0">Mass Gainers</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="{{ url_for('products', category='preworkout') }}" class="text-decoration-none">
+                    <div class="category-card">
+                        <div class="category-img">
+                            <img src="{{ url_for('static', filename='images/preworkout/optimum nutrition.jpg') }}" class="img-fluid" alt="Pre-Workout">
+                        </div>
+                        <div class="card-body text-center">
+                            <h5 class="mb-0">Pre-Workout</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{{ url_for('categories') }}" class="btn btn-warning">Browse All Categories</a>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Products: Whey Protein -->
+<section class="py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Whey Protein</h2>
+            <a href="{{ url_for('products', category='whey protein') }}" class="btn btn-outline-warning">View All</a>
+        </div>
+        <div class="row g-4">
+            {% for product in whey_products %}
+            <div class="col-md-3">
+                <div class="product-card">
+                    {% if product.price > product.discounted_price %}
+                    <span class="discount-badge">
+                        {{ ((product.price - product.discounted_price) / product.price * 100) | int }}% OFF
+                    </span>
+                    {% endif %}
+                    <a href="{{ url_for('product_detail', product_id=product.id) }}">
+                        <div class="product-img">
+                            <img src="{{ product.image_url }}" class="img-fluid" alt="{{ product.name }}">
+                        </div>
+                    </a>
+                    <div class="card-body">
+                        <div class="product-rating mb-1">
+                            {% for i in range(5) %}
+                                {% if i < product.rating | int %}
+                                <i class="fas fa-star"></i>
+                                {% elif i < product.rating %}
+                                <i class="fas fa-star-half-alt"></i>
+                                {% else %}
+                                <i class="far fa-star"></i>
+                                {% endif %}
+                            {% endfor %}
+                            <small class="text-muted ms-1">{{ product.rating }}</small>
+                        </div>
+                        <h6 class="product-title">{{ product.name }}</h6>
+                        <div class="product-price">
+                            <span class="text-warning">₹{{ product.discounted_price }}</span>
+                            {% if product.price > product.discounted_price %}
+                            <small class="old-price ms-2">₹{{ product.price }}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="{{ url_for('product_detail', product_id=product.id) }}" class="btn btn-sm btn-outline-secondary">Details</a>
+                            <div class="d-flex gap-1">
+                                <!-- Add to Wishlist -->
+                                <form action="{{ url_for('add_to_wishlist', product_id=product.id) }}" method="POST" class="wishlist-form">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Add to Wishlist">
+                                        <i class="fas fa-heart"></i>
+                                    </button>
+                                </form>
+                                <!-- Add to Cart -->
+                                <form action="{{ url_for('add_to_cart', product_id=product.id) }}" method="POST">
+                                    <input type="hidden" name="quantity" value="1">
+                                    <button type="submit" class="btn btn-sm btn-warning">Add to Cart</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Featured Products: Mass Gainers -->
+<section class="py-5 bg-white">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Mass Gainers</h2>
+            <a href="{{ url_for('products', category='gainer') }}" class="btn btn-outline-warning">View All</a>
+        </div>
+        <div class="row g-4">
+            {% for product in gainers %}
+            <div class="col-md-3">
+                <div class="product-card">
+                    {% if product.price > product.discounted_price %}
+                    <span class="discount-badge">
+                        {{ ((product.price - product.discounted_price) / product.price * 100) | int }}% OFF
+                    </span>
+                    {% endif %}
+                    <a href="{{ url_for('product_detail', product_id=product.id) }}">
+                        <div class="product-img">
+                            <img src="{{ product.image_url }}" class="img-fluid" alt="{{ product.name }}">
+                        </div>
+                    </a>
+                    <div class="card-body">
+                        <div class="product-rating mb-1">
+                            {% for i in range(5) %}
+                                {% if i < product.rating | int %}
+                                <i class="fas fa-star"></i>
+                                {% elif i < product.rating %}
+                                <i class="fas fa-star-half-alt"></i>
+                                {% else %}
+                                <i class="far fa-star"></i>
+                                {% endif %}
+                            {% endfor %}
+                            <small class="text-muted ms-1">{{ product.rating }}</small>
+                        </div>
+                        <h6 class="product-title">{{ product.name }}</h6>
+                        <div class="product-price">
+                            <span class="text-warning">₹{{ product.discounted_price }}</span>
+                            {% if product.price > product.discounted_price %}
+                            <small class="old-price ms-2">₹{{ product.price }}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="{{ url_for('product_detail', product_id=product.id) }}" class="btn btn-sm btn-outline-secondary">Details</a>
+                            <div class="d-flex gap-1">
+                                <!-- Add to Wishlist -->
+                                <form action="{{ url_for('add_to_wishlist', product_id=product.id) }}" method="POST" class="wishlist-form">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Add to Wishlist">
+                                        <i class="fas fa-heart"></i>
+                                    </button>
+                                </form>
+                                <!-- Add to Cart -->
+                                <form action="{{ url_for('add_to_cart', product_id=product.id) }}" method="POST">
+                                    <input type="hidden" name="quantity" value="1">
+                                    <button type="submit" class="btn btn-sm btn-warning">Add to Cart</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Why Choose GYM SUPPLEMENTS AND NUTRITION PRODUCT</h2>
+        <div class="row g-4">
+            <div class="col-md-3 text-center">
+                <div class="feature-icon mb-3">
+                    <i class="fas fa-certificate"></i>
+                </div>
+                <h5>Authentic Products</h5>
+                <p class="text-muted">100% authentic products with bill and hologram</p>
+            </div>
+            <div class="col-md-3 text-center">
+                <div class="feature-icon mb-3">
+                    <i class="fas fa-shipping-fast"></i>
+                </div>
+                <h5>Fast Delivery</h5>
+                <p class="text-muted">Free shipping on orders above ₹499</p>
+            </div>
+            <div class="col-md-3 text-center">
+                <div class="feature-icon mb-3">
+                    <i class="fas fa-medal"></i>
+                </div>
+                <h5>Premium Quality</h5>
+                <p class="text-muted">Produced in world-class facilities</p>
+            </div>
+            <div class="col-md-3 text-center">
+                <div class="feature-icon mb-3">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h5>24/7 Support</h5>
+                <p class="text-muted">Expert advice from fitness professionals</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="py-5 bg-white">
+    <div class="container">
+        <h2 class="text-center mb-5">What Our Customers Say</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="testimonial-img-placeholder bg-secondary rounded-circle"></div>
+                        <div>
+                            <h6 class="mb-0">Rahul Singh</h6>
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mb-0">"I've been using GYM SUPPLEMENTS AND NUTRITION PRODUCT Whey for 6 months and the results are amazing. Highly recommended!"</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="testimonial-img-placeholder bg-secondary rounded-circle"></div>
+                        <div>
+                            <h6 class="mb-0">Priya Sharma</h6>
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mb-0">"Great taste, mixes well, and has helped me reach my fitness goals faster than I expected."</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="testimonial-img-placeholder bg-secondary rounded-circle"></div>
+                        <div>
+                            <h6 class="mb-0">Akash Patel</h6>
+                            <div class="testimonial-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mb-0">"The Mass Gainer has been a game-changer for my bulking phase. I've gained 8kg in 3 months."</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Blog Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Fitness Articles</h2>
+            <a href="#" class="btn btn-outline-warning">View All</a>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="blog-card">
+                    <div class="blog-img">
+                        <i class="fas fa-newspaper"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5>5 Ways to Maximize Your Protein Intake</h5>
+                        <p class="text-muted">Learn how to optimize your protein consumption for better muscle growth.</p>
+                        <a href="#" class="btn btn-link text-warning p-0">Read More <i class="fas fa-arrow-right ms-1"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="blog-card">
+                    <div class="blog-img">
+                        <i class="fas fa-newspaper"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5>Best Pre-Workout Nutrition Tips</h5>
+                        <p class="text-muted">Fuel your workouts properly with these pre-workout nutrition strategies.</p>
+                        <a href="#" class="btn btn-link text-warning p-0">Read More <i class="fas fa-arrow-right ms-1"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="blog-card">
+                    <div class="blog-img">
+                        <i class="fas fa-newspaper"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5>Guide to Building Muscle Mass</h5>
+                        <p class="text-muted">A comprehensive guide to building quality muscle mass effectively.</p>
+                        <a href="#" class="btn btn-link text-warning p-0">Read More <i class="fas fa-arrow-right ms-1"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="py-5 bg-dark text-white">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <h2 class="mb-3">Subscribe to Our Newsletter</h2>
+                <p class="mb-4">Get the latest updates, offers and fitness tips straight to your inbox.</p>
+                <form class="d-flex justify-content-center">
+                    <div class="input-group mb-3" style="max-width: 500px;">
+                        <input type="email" class="form-control" placeholder="Your Email Address">
+                        <button class="btn btn-warning" type="submit">Subscribe</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const bannerImage = document.getElementById('hero-banner-image');
+        const imageContainer = document.getElementById('hero-image-container');
+
+        // Get image URLs from the data attribute and parse the JSON string
+        const imageUrlsJson = imageContainer.getAttribute('data-image-urls');
+        const images = JSON.parse(imageUrlsJson);
+
+        let currentImageIndex = 0;
+
+        // Set the initial image source from the array
+        bannerImage.src = images[currentImageIndex];
+
+        function changeImage() {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            bannerImage.src = images[currentImageIndex];
+        }
+
+        // Change image every 2 minutes (120000 milliseconds)
+        setInterval(changeImage, 120000);
+    });
+</script>
+{% endblock %}

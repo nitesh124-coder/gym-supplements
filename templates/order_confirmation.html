@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Order Confirmation - GYM SUPPLEMENTS AND NUTRITION PRODUCT{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4">Order Confirmed!</h2>
+    <div class="alert alert-success" role="alert">
+        Thank you for your order. Your order has been placed successfully.
+    </div>
+    <p>You will receive an email confirmation shortly.</p>
+    <a href="{{ url_for('home') }}" class="btn btn-primary">Continue Shopping</a>
+</div>
+{% endblock %}

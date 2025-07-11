@@ -1,0 +1,247 @@
+{% extends 'base.html' %}
+
+{% block title %}Six Pack Abs Diet Plan - GYM SUPPLEMENTS AND NUTRITION PRODUCT{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('home') }}" class="text-decoration-none">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('plan') }}" class="text-decoration-none">Plans</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Six Pack Abs Diet Plan</li>
+        </ol>
+    </nav>
+
+    <img src="{{ url_for('static', filename='images/sixpack.jpeg') }}" alt="Six Pack Abs Diet Plan" class="img-fluid mb-4 rounded">
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body p-4">
+                    <h1 class="fw-bold mb-3">Six Pack Abs Diet Plan</h1>
+                    <p class="lead">A specialized diet plan designed to help you achieve visible abs by reducing body fat while maintaining muscle mass. This plan focuses on lean proteins, complex carbs, and healthy fats.</p>
+
+                    <div class="alert alert-info">
+                        <p class="mb-0"><strong>Note:</strong> This is general guidance — for personalized results, consult a nutritionist or fitness professional.</p>
+                    </div>
+
+                    <div class="mt-4">
+                        <h3 class="border-bottom pb-2">Key Principles for Six Pack Abs</h3>
+                        <ul class="list-group list-group-flush mb-4">
+                            <li class="list-group-item ps-0 border-0"><i class="fas fa-check-circle text-success me-2"></i> Calorie deficit (300-500 calories below maintenance)</li>
+                            <li class="list-group-item ps-0 border-0"><i class="fas fa-check-circle text-success me-2"></i> High protein intake (1.6-2.2g per kg of bodyweight)</li>
+                            <li class="list-group-item ps-0 border-0"><i class="fas fa-check-circle text-success me-2"></i> Moderate healthy fats (20-30% of total calories)</li>
+                            <li class="list-group-item ps-0 border-0"><i class="fas fa-check-circle text-success me-2"></i> Complex carbohydrates (timed around workouts)</li>
+                            <li class="list-group-item ps-0 border-0"><i class="fas fa-check-circle text-success me-2"></i> 5-6 meals per day</li>
+                            <li class="list-group-item ps-0 border-0"><i class="fas fa-check-circle text-success me-2"></i> Stay hydrated (3-4 liters of water daily)</li>
+                        </ul>
+
+                        <h3 class="border-bottom pb-2 mt-5">Day 1 Sample Six Pack Diet Plan</h3>
+
+                        <div class="meal-plan">
+                            <div class="meal-card">
+                                <h5><i class="fas fa-sun text-warning me-2"></i> Meal 1 (Breakfast)</h5>
+                                <ul class="meal-items">
+                                    <li>6 egg whites + 1 whole egg</li>
+                                    <li>1/2 cup oatmeal with berries</li>
+                                    <li>Green tea or black coffee</li>
+                                </ul>
+                            </div>
+
+                            <div class="meal-card">
+                                <h5><i class="fas fa-apple-alt text-danger me-2"></i> Meal 2 (Pre-Workout)</h5>
+                                <ul class="meal-items">
+                                    <li>1 scoop whey protein</li>
+                                    <li>1 banana</li>
+                                    <li>5 almonds</li>
+                                </ul>
+                            </div>
+
+                            <div class="meal-card">
+                                <h5><i class="fas fa-utensils text-primary me-2"></i> Meal 3 (Post-Workout)</h5>
+                                <ul class="meal-items">
+                                    <li>1 scoop whey protein</li>
+                                    <li>1/2 cup brown rice</li>
+                                    <li>Grilled chicken breast (150g)</li>
+                                </ul>
+                            </div>
+
+                            <div class="meal-card">
+                                <h5><i class="fas fa-apple-alt text-danger me-2"></i> Meal 4 (Snack)</h5>
+                                <ul class="meal-items">
+                                    <li>Greek yogurt with chia seeds</li>
+                                    <li>Handful of mixed nuts</li>
+                                </ul>
+                            </div>
+
+                            <div class="meal-card">
+                                <h5><i class="fas fa-moon text-secondary me-2"></i> Meal 5 (Dinner)</h5>
+                                <ul class="meal-items">
+                                    <li>Grilled fish (200g)</li>
+                                    <li>Large mixed salad with olive oil</li>
+                                    <li>1/2 sweet potato</li>
+                                </ul>
+                            </div>
+
+                            <div class="meal-card">
+                                <h5><i class="fas fa-dumbbell text-dark me-2"></i> Meal 6 (Optional – Before Bed)</h5>
+                                <ul class="meal-items">
+                                    <li>Casein protein shake</li>
+                                    <li>1 tbsp almond butter</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3 class="border-bottom pb-2 mt-5">Foods to Focus On</h3>
+
+                        <div class="row mt-4">
+                            <div class="col-md-6 mb-4">
+                                <div class="food-category-card">
+                                    <h5><i class="fas fa-drumstick-bite me-2 text-danger"></i> Proteins</h5>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-angle-right me-2"></i>Egg whites</li>
+                                        <li><i class="fas fa-angle-right me-2"></i>Chicken breast</li>
+                                        <li><i class="fas fa-angle-right me-2"></i>Lean fish</li>
+                                        <li><i class="fas fa-angle-right me-2"></i>Whey protein</li>
+                                        <li><i class="fas fa-angle-right me-2"></i>Casein protein</li>
+                                        <li><i class="fas fa-angle-right me-2"></i>Greek yogurt</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <div class="food-category-card">
+                                    <h5><i class="fas fa-bread-slice me-2 text-warning"></i> Carbs</h5>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-angle-right me-2"></i>Oatmeal</li>
+                                        <li><i class="fas fa-angle-right me-2"></i>Brown rice</li>
+                                        <li><i class="fas fa-angle-right me-2"></i>Sweet potato</li>
+                                        <li><i class="fas fa-angle-right me-2"></i>Quinoa</li>
+                                        <li><i class="fas fa-angle-right me-2"></i>Fruits (berries, banana)</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <div class="food-category-card">
+                                    <h5><i class="fas fa-seedling me-2 text-success"></i> Healthy Fats</h5>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-angle-right me-2"></i>Almonds</li>
+                                        <li><i class="fas fa-angle-right me-2"></i>Avocado</li>
+                                        <li><i class="fas fa-angle-right me-2"></i>Olive oil</li>
+                                        <li><i class="fas fa-angle-right me-2"></i>Chia seeds</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <div class="food-category-card">
+                                    <h5><i class="fas fa-carrot me-2 text-success"></i> Vegetables</h5>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-angle-right me-2"></i>Spinach</li>
+                                        <li><i class="fas fa-angle-right me-2"></i>Broccoli</li>
+                                        <li><i class="fas fa-angle-right me-2"></i>Bell peppers</li>
+                                        <li><i class="fas fa-angle-right me-2"></i>Asparagus</li>
+                                        <li><i class="fas fa-angle-right me-2"></i>Green beans</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body">
+                    <h4 class="fw-bold mb-3">Plan Benefits</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i>Reduced body fat</li>
+                        <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i>Visible abdominal definition</li>
+                        <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i>Maintained muscle mass</li>
+                        <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i>Improved energy levels</li>
+                        <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i>Better overall body composition</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm mb-4 bg-success text-white">
+                <div class="card-body text-center py-4">
+                    <h3 class="fw-bold mb-3">Get This Plan</h3>
+                    <p class="mb-3">Complete 7-day diet plan with shopping lists and recipes</p>
+                    <h4 class="fw-bold mb-3">₹1,999</h4>
+                    <a href="{{ url_for('purchase_plan', plan_name='Six Pack Abs') }}" class="btn btn-light btn-lg w-100">Purchase Now</a>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body">
+                    <h4 class="fw-bold mb-3">Need Help?</h4>
+                    <p>Our nutrition experts can help customize this plan for your specific needs and goals.</p>
+                    <a href="#" class="btn btn-outline-success w-100">Contact a Nutritionist</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .meal-plan {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .meal-card {
+        padding: 1.25rem;
+        border-radius: 8px;
+        background-color: #f8f9fa;
+        border-left: 4px solid #28a745;
+    }
+
+    .meal-card h5 {
+        color: #333;
+        margin-bottom: 0.75rem;
+    }
+
+    .meal-items {
+        list-style: none;
+        padding-left: 0;
+        margin-bottom: 0;
+    }
+
+    .meal-items li {
+        padding: 0.4rem 0;
+        position: relative;
+        padding-left: 1.25rem;
+    }
+
+    .meal-items li:before {
+        content: "•";
+        color: #28a745;
+        position: absolute;
+        left: 0;
+        font-weight: bold;
+    }
+
+    .food-category-card {
+        padding: 1.25rem;
+        border-radius: 8px;
+        background-color: #f8f9fa;
+        height: 100%;
+    }
+
+    .food-category-card h5 {
+        border-bottom: 1px solid #dee2e6;
+        padding-bottom: 0.75rem;
+        margin-bottom: 1rem;
+    }
+
+    .food-category-card ul li {
+        padding: 0.3rem 0;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block title %}Shop by Category - GYM SUPPLEMENTS AND NUTRITION PRODUCT{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('home') }}" class="text-decoration-none">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Categories</li>
+        </ol>
+    </nav>
+
+    <h1 class="text-center mb-5">Shop by Category</h1>
+
+    <div class="row g-4">
+        {% for category in categories %}
+        <div class="col-md-4 mb-4">
+            <a href="{{ url_for('products', category=category.url) }}" class="text-decoration-none">
+                <div class="category-card" {% if category.color %}style="border-color: {{ category.color }};"{% endif %}>
+                    <div class="category-img">
+                        <img src="{{ category.image }}" class="img-fluid" alt="{{ category.name }}">
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="mb-0">{{ category.name }}</h5>
+                        {% if category.description %}
+                        <p class="small text-muted mt-2">{{ category.description }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="category-overlay"></div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .category-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        margin-bottom: 20px;
+        border: 2px solid transparent;
+    }
+
+    .category-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    }
+
+    .category-img {
+        height: 220px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f8f9fa;
+    }
+
+    .category-img img {
+        max-height: 180px;
+        max-width: 85%;
+        object-fit: contain;
+        transition: transform 0.3s ease;
+    }
+
+    .category-card:hover .category-img img {
+        transform: scale(1.05);
+    }
+
+    .card-body {
+        padding: 15px;
+        background-color: white;
+        position: relative;
+        z-index: 2;
+    }
+
+    .card-body h5 {
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 0;
+        font-size: 1.25rem;
+    }
+
+    .category-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: 0;
+        background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.05));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .category-card:hover .category-overlay {
+        opacity: 1;
+    }
+</style>
+{% endblock %}

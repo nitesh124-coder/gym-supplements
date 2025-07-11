@@ -1,0 +1,521 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ product.name }} - GYM SUPPLEMENTS AND NUTRITION PRODUCT{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('home') }}" class="text-decoration-none">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('products', category=product.category) }}" class="text-decoration-none">{{ product.category|title }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <!-- Product Images -->
+        <div class="col-lg-5">
+            <div class="product-gallery-main mb-3">
+                <div class="product-img-large">
+                    <img src="{{ product.image_url }}" class="img-fluid" alt="{{ product.name }}">
+                </div>
+            </div>
+            <div class="row g-2">
+                <div class="col-3">
+                    <div class="product-img bg-light border">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="product-img bg-light border">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="product-img bg-light border">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="product-img bg-light border">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Info -->
+        <div class="col-lg-7">
+            <h2 class="mb-2">{{ product.name }}</h2>
+
+            <div class="d-flex align-items-center mb-3">
+                <div class="product-rating">
+                    {% for i in range(5) %}
+                        {% if i < product.rating | int %}
+                        <i class="fas fa-star"></i>
+                        {% elif i < product.rating %}
+                        <i class="fas fa-star-half-alt"></i>
+                        {% else %}
+                        <i class="far fa-star"></i>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <span class="ms-2 text-muted">{{ product.rating }} Rating</span>
+                <span class="mx-2 text-muted">|</span>
+                <span class="text-success"><i class="fas fa-check-circle me-1"></i> In Stock</span>
+            </div>
+
+            <div class="mb-3">
+                <h3 class="text-danger mb-0">₹{{ product.discounted_price }}</h3>
+                {% if product.price > product.discounted_price %}
+                <div>
+                    <span class="old-price">₹{{ product.price }}</span>
+                    <span class="text-success ms-2">{{ ((product.price - product.discounted_price) / product.price * 100) | int }}% OFF</span>
+                </div>
+                {% endif %}
+                <small class="text-muted">MRP incl. of all taxes</small>
+            </div>
+
+            <div class="mb-4">
+                <h5>Description</h5>
+                <p>{{ product.description }}</p>
+            </div>
+
+            {# Conditional Size Selection #}
+            {% if product.category != 'accessories' %}
+            <!-- Size Selection for Proteins/Supplements -->
+            <div class="mb-4">
+                <h5>Choose Size</h5>
+                <div class="size-select">
+                    <button class="btn active">1 kg</button>
+                    <button class="btn">2 kg</button>
+                    <button class="btn">5 kg</button>
+                </div>
+            </div>
+            {% elif product.type == 'shoes' %}
+            <!-- Size Selection for Shoes -->
+            <div class="mb-4">
+                <h5>Choose Size (UK)</h5>{# Assuming UK shoe sizes #}
+                <div class="size-select">
+                    <button class="btn">7</button>
+                    <button class="btn">8</button>
+                    <button class="btn">9</button>
+                    <button class="btn">10</button>
+                    <button class="btn">11</button>
+                    <button class="btn">12</button>
+                </div>
+            </div>
+            {% elif product.type not in ['heartratemonitor', 'bottles', 'caps'] %}
+            <!-- Size Selection for Apparel/Other Accessories -->
+            <div class="mb-4">
+                <h5>Choose Size</h5>
+                <div class="size-select">
+                    <button class="btn">S</button>
+                    <button class="btn">M</button>
+                    <button class="btn">L</button>
+                    <button class="btn">XL</button>
+                    <button class="btn">XXL</button>
+                </div>
+            </div>
+            {% endif %}
+
+            {# Conditional Flavor Selection #}
+            {% if product.category != 'accessories' %}
+            <!-- Flavor Selection -->
+            <div class="mb-4">
+                <h5>Choose Flavor</h5>
+                <div class="flavor-select">
+                    <button class="btn active">Chocolate</button>
+                    <button class="btn">Vanilla</button>
+                    <button class="btn">Strawberry</button>
+                    <button class="btn">Cookies & Cream</button>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Quantity and Add to Cart -->
+            <div class="mb-4">
+                <div class="row align-items-end g-3">
+                    <div class="col-md-3">
+                        <label for="quantity" class="form-label">Quantity</label>
+                        <input type="number" class="form-control" id="quantity" name="quantity" value="1" min="1" max="{{ product.stock }}">
+                    </div>
+                    <div class="col-md-9">
+                        <div class="d-flex gap-2">
+                            <!-- Add to Cart Form -->
+                            <form action="{{ url_for('add_to_cart', product_id=product.id) }}" method="POST" class="flex-grow-1">
+                                <input type="hidden" name="quantity" value="1" id="cart-quantity">
+                                <button type="submit" class="btn btn-danger btn-lg w-100"><i class="fas fa-shopping-cart me-2"></i> Add to Cart</button>
+                            </form>
+                            <!-- Add to Wishlist Form -->
+                            <form action="{{ url_for('add_to_wishlist', product_id=product.id) }}" method="POST" class="wishlist-form">
+                                <button type="submit" class="btn btn-outline-danger btn-lg" title="Add to Wishlist"><i class="fas fa-heart me-2"></i> Wishlist</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features -->
+            <div class="mb-4">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-shield-alt text-danger me-2"></i>
+                            <div>
+                                <small class="d-block">100% Original</small>
+                                <small class="text-muted">Authentic Products</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-truck text-danger me-2"></i>
+                            <div>
+                                <small class="d-block">Free Shipping</small>
+                                <small class="text-muted">Above ₹499</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-exchange-alt text-danger me-2"></i>
+                            <div>
+                                <small class="d-block">Easy Returns</small>
+                                <small class="text-muted">10 Days Return Policy</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Tabs -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <ul class="nav nav-tabs" id="productTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#description" type="button">
+                        Description
+                    </button>
+                </li>
+                {% if product.category != 'accessories' %}
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#nutritionFacts" type="button">
+                        Nutrition Facts
+                    </button>
+                </li>
+                {% endif %}
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#reviews" type="button">
+                        Reviews
+                    </button>
+                </li>
+            </ul>
+            <div class="tab-content p-4 border border-top-0 rounded-bottom">
+                <div class="tab-pane fade show active" id="description">
+                    <h4 class="mb-3">Product Description</h4>
+                    <p>{{ product.description }}</p>
+                    {% if product.category in ['whey protein', 'gainer', 'preworkout', 'fatloss', 'vitmins', 'ayruveda', 'fitfoods'] %}
+                        <h5 class="mt-4">Key Benefits</h5>
+                        <ul>
+                            <li>High-quality protein for muscle building</li>
+                            <li>Low in carbohydrates and fat</li>
+                            <li>Supports muscle recovery after workouts</li>
+                            <li>Great taste and mixability</li>
+                            <li>Suitable for vegetarians</li>
+                        </ul>
+                        <h5 class="mt-4">How to Use</h5>
+                        <p>Add 1 scoop (30g) to 200-250ml of cold water or milk in a shaker. Shake well and consume immediately after your workout or as directed by a healthcare professional.</p>
+                    {% elif product.category == 'accessories' and product.type in ['shorts', 'tshirt', 'tracks', 'caps', 'headband', 'wristband', 'bag', 'shoes'] %}
+                        <h5 class="mt-4">About this Product</h5>
+                        <ul>
+                            <li>Comfortable and durable for everyday use</li>
+                            <li>Designed for active lifestyles and sports</li>
+                            <li>Quality materials for long-lasting performance</li>
+                        </ul>
+                    {% elif product.category == 'accessories' and product.type in ['bottles'] %}
+                        <h5 class="mt-4">About this Product</h5>
+                        <ul>
+                            <li>Leak-proof and easy to carry</li>
+                            <li>Perfect for hydration on the go</li>
+                            <li>BPA-free and safe for daily use</li>
+                        </ul>
+                    {% elif product.category == 'accessories' and product.type in ['heartratemonitor'] %}
+                        <h5 class="mt-4">About this Product</h5>
+                        <ul>
+                            <li>Accurate heart rate tracking</li>
+                            <li>Easy to use and comfortable to wear</li>
+                            <li>Ideal for fitness and health monitoring</li>
+                        </ul>
+                    {% endif %}
+                </div>
+                {% if product.category != 'accessories' %}
+                <div class="tab-pane fade" id="nutritionFacts">
+                    <h4 class="mb-3">Nutrition Information</h4>
+                    <p>Based on 1 serving size (30g)</p>
+
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <th>Calories</th>
+                                <td>120 kcal</td>
+                            </tr>
+                            <tr>
+                                <th>Protein</th>
+                                <td>24g</td>
+                            </tr>
+                            <tr>
+                                <th>Carbohydrates</th>
+                                <td>3g</td>
+                            </tr>
+                            <tr>
+                                <th>- of which sugars</th>
+                                <td>1.5g</td>
+                            </tr>
+                            <tr>
+                                <th>Fat</th>
+                                <td>1.5g</td>
+                            </tr>
+                            <tr>
+                                <th>- of which saturates</th>
+                                <td>0.5g</td>
+                            </tr>
+                            <tr>
+                                <th>Sodium</th>
+                                <td>120mg</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="mt-3"><strong>Ingredients:</strong> Whey Protein Concentrate, Whey Protein Isolate, Cocoa Powder (for chocolate flavor), Natural and Artificial Flavors, Soy Lecithin, Xanthan Gum, Sucralose.</p>
+
+                    <div class="alert alert-warning mt-3">
+                        <strong>Allergen Information:</strong> Contains milk and soy ingredients. Manufactured in a facility that processes eggs, tree nuts, wheat, and shellfish.
+                    </div>
+                </div>
+                {% endif %}
+                <div class="tab-pane fade" id="reviews">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h4 class="mb-0">Customer Reviews</h4>
+                        <button class="btn btn-outline-danger">Write a Review</button>
+                    </div>
+
+                    <!-- Review Summary -->
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <div class="text-center p-3 border rounded">
+                                <h1 class="display-4 mb-0">{{ product.rating }}</h1>
+                                <div class="product-rating my-2">
+                                    {% for i in range(5) %}
+                                        {% if i < product.rating | int %}
+                                        <i class="fas fa-star"></i>
+                                        {% elif i < product.rating %}
+                                        <i class="fas fa-star-half-alt"></i>
+                                        {% else %}
+                                        <i class="far fa-star"></i>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                                <p class="mb-0">Based on 240 reviews</p>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="mb-2 d-flex align-items-center">
+                                <span class="me-2">5</span>
+                                <div class="progress flex-grow-1" style="height: 8px;">
+                                    <div class="progress-bar bg-success" style="width: 70%"></div>
+                                </div>
+                                <span class="ms-2">70%</span>
+                            </div>
+                            <div class="mb-2 d-flex align-items-center">
+                                <span class="me-2">4</span>
+                                <div class="progress flex-grow-1" style="height: 8px;">
+                                    <div class="progress-bar bg-success" style="width: 20%"></div>
+                                </div>
+                                <span class="ms-2">20%</span>
+                            </div>
+                            <div class="mb-2 d-flex align-items-center">
+                                <span class="me-2">3</span>
+                                <div class="progress flex-grow-1" style="height: 8px;">
+                                    <div class="progress-bar bg-warning" style="width: 5%"></div>
+                                </div>
+                                <span class="ms-2">5%</span>
+                            </div>
+                            <div class="mb-2 d-flex align-items-center">
+                                <span class="me-2">2</span>
+                                <div class="progress flex-grow-1" style="height: 8px;">
+                                    <div class="progress-bar bg-danger" style="width: 3%"></div>
+                                </div>
+                                <span class="ms-2">3%</span>
+                            </div>
+                            <div class="mb-2 d-flex align-items-center">
+                                <span class="me-2">1</span>
+                                <div class="progress flex-grow-1" style="height: 8px;">
+                                    <div class="progress-bar bg-danger" style="width: 2%"></div>
+                                </div>
+                                <span class="ms-2">2%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review List -->
+                    <div class="border-top pt-4">
+                        <!-- Review Item -->
+                        <div class="mb-4 pb-4 border-bottom">
+                            <div class="d-flex justify-content-between mb-2">
+                                <div>
+                                    <h5 class="mb-0">Rahul Singh</h5>
+                                    <div class="product-rating my-1">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                                <span class="text-muted">3 months ago</span>
+                            </div>
+                            <p>Amazing product! I've been using it for 3 months and have already seen significant muscle gains. The chocolate flavor tastes great and mixes well with both water and milk.</p>
+                            <div class="d-flex align-items-center">
+                                <span class="badge bg-light text-dark me-2">Flavor: Chocolate</span>
+                                <span class="badge bg-light text-dark">Size: 2kg</span>
+                            </div>
+                        </div>
+
+                        <!-- Review Item -->
+                        <div class="mb-4 pb-4 border-bottom">
+                            <div class="d-flex justify-content-between mb-2">
+                                <div>
+                                    <h5 class="mb-0">Priya Sharma</h5>
+                                    <div class="product-rating my-1">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                </div>
+                                <span class="text-muted">1 month ago</span>
+                            </div>
+                            <p>Good protein supplement with minimal bloating. Mixes well and doesn't have a chalky aftertaste like some other brands. I've noticed better recovery after my workouts.</p>
+                            <div class="d-flex align-items-center">
+                                <span class="badge bg-light text-dark me-2">Flavor: Vanilla</span>
+                                <span class="badge bg-light text-dark">Size: 1kg</span>
+                            </div>
+                        </div>
+
+                        <!-- Review Item -->
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-between mb-2">
+                                <div>
+                                    <h5 class="mb-0">Akash Patel</h5>
+                                    <div class="product-rating my-1">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                                <span class="text-muted">2 weeks ago</span>
+                            </div>
+                            <p>Best protein I've used so far. Great value for money and premium quality. The cookies and cream flavor is amazing. Highly recommended for serious fitness enthusiasts.</p>
+                            <div class="d-flex align-items-center">
+                                <span class="badge bg-light text-dark me-2">Flavor: Cookies & Cream</span>
+                                <span class="badge bg-light text-dark">Size: 5kg</span>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <button class="btn btn-outline-secondary">Load More Reviews</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Related Products -->
+    <section class="py-5">
+        <h3 class="mb-4">Related Products</h3>
+        <div class="row g-4">
+            {% for product in related_products %}
+            {% if loop.index <= 4 %}
+            <div class="col-md-3">
+                <div class="product-card">
+                    {% if product.price > product.discounted_price %}
+                    <span class="discount-badge">
+                        {{ ((product.price - product.discounted_price) / product.price * 100) | int }}% OFF
+                    </span>
+                    {% endif %}
+                    <a href="{{ url_for('product_detail', product_id=product.id) }}">
+                        <div class="product-img">
+                            <img src="{{ product.image_url }}" class="img-fluid" alt="{{ product.name }}">
+                        </div>
+                    </a>
+                    <div class="card-body">
+                        <div class="product-rating mb-1">
+                            {% for i in range(5) %}
+                                {% if i < product.rating | int %}
+                                <i class="fas fa-star"></i>
+                                {% elif i < product.rating %}
+                                <i class="fas fa-star-half-alt"></i>
+                                {% else %}
+                                <i class="far fa-star"></i>
+                                {% endif %}
+                            {% endfor %}
+                            <small class="text-muted ms-1">{{ product.rating }}</small>
+                        </div>
+                        <h6 class="product-title">{{ product.name }}</h6>
+                        <div class="product-price">
+                            <span class="text-danger">₹{{ product.discounted_price }}</span>
+                            {% if product.price > product.discounted_price %}
+                            <small class="old-price ms-2">₹{{ product.price }}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="{{ url_for('product_detail', product_id=product.id) }}" class="btn btn-sm btn-outline-secondary">Details</a>
+                            <div class="d-flex gap-1">
+                                <!-- Add to Wishlist -->
+                                <form action="{{ url_for('add_to_wishlist', product_id=product.id) }}" method="POST" class="wishlist-form">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Add to Wishlist">
+                                        <i class="fas fa-heart"></i>
+                                    </button>
+                                </form>
+                                <!-- Add to Cart -->
+                                <form action="{{ url_for('add_to_cart', product_id=product.id) }}" method="POST">
+                                    <input type="hidden" name="quantity" value="1">
+                                    <button type="submit" class="btn btn-sm btn-danger">Add to Cart</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Sync quantity input with cart form
+document.addEventListener('DOMContentLoaded', function() {
+    const quantityInput = document.getElementById('quantity');
+    const cartQuantityInput = document.getElementById('cart-quantity');
+
+    if (quantityInput && cartQuantityInput) {
+        quantityInput.addEventListener('input', function() {
+            cartQuantityInput.value = this.value;
+        });
+    }
+});
+</script>
+{% endblock %}

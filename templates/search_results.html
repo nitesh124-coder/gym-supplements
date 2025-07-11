@@ -1,0 +1,208 @@
+{% extends 'base.html' %}
+
+{% block title %}Search Results for "{{ query }}" - GYM SUPPLEMENTS AND NUTRITION PRODUCT{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('home') }}" class="text-decoration-none">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Search Results</li>
+        </ol>
+    </nav>
+
+    <h2 class="mb-4">Search Results for "{{ query }}"</h2>
+
+    {% if products %}
+    <div class="row">
+        <!-- Filters Sidebar -->
+        <div class="col-lg-3">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">Filter Results</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Price Range -->
+                    <div class="mb-4">
+                        <h6 class="mb-3">Price Range</h6>
+                        <div id="price-range-filters">
+                            <div class="form-check mb-2">
+                                <input class="form-check-input price-range-filter" type="checkbox" id="price-0-500" value="0-500">
+                                <label class="form-check-label" for="price-0-500">₹0 - ₹500</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input price-range-filter" type="checkbox" id="price-500-1000" value="500-1000">
+                                <label class="form-check-label" for="price-500-1000">₹500 - ₹1000</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input price-range-filter" type="checkbox" id="price-1000-2000" value="1000-2000">
+                                <label class="form-check-label" for="price-1000-2000">₹1000 - ₹2000</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input price-range-filter" type="checkbox" id="price-2000-5000" value="2000-5000">
+                                <label class="form-check-label" for="price-2000-5000">₹2000 - ₹5000</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <!-- Category Filter -->
+                    <div class="mb-4">
+                        <h6 class="mb-3">Product Category</h6>
+                        <div id="category-filters">
+                            {% for category in available_categories %}
+                            <div class="form-check mb-2">
+                                <input class="form-check-input category-filter" type="checkbox" id="category-{{ loop.index }}" value="{{ category }}"{% if category in request.args.getlist('category') %} checked{% endif %}>
+                                <label class="form-check-label" for="category-{{ loop.index }}">{{ category|title }}</label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <!-- Discount Filter -->
+                    <div class="mb-4">
+                        <h6 class="mb-3">Discount</h6>
+                        <div id="discount-filters">
+                            <div class="form-check mb-2">
+                                <input class="form-check-input discount-filter" type="checkbox" id="discount-10" value="10"{% if '10' in request.args.getlist('discount') %} checked{% endif %}>
+                                <label class="form-check-label" for="discount-10">10% and above</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input discount-filter" type="checkbox" id="discount-20" value="20"{% if '20' in request.args.getlist('discount') %} checked{% endif %}>
+                                <label class="form-check-label" for="discount-20">20% and above</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input discount-filter" type="checkbox" id="discount-30" value="30"{% if '30' in request.args.getlist('discount') %} checked{% endif %}>
+                                <label class="form-check-label" for="discount-30">30% and above</label>
+                            </div>
+                            {# Add more discount options if needed #}
+                        </div>
+                    </div>
+
+                    <button id="apply-filters-btn-search" class="btn btn-warning w-100">Apply Filters</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Results Grid -->
+        <div class="col-lg-9">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <p class="mb-0">Found {{ products|length }} results</p>
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        Sort By
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Relevance</a></li>
+                        <li><a class="dropdown-item" href="#">Price: Low to High</a></li>
+                        <li><a class="dropdown-item" href="#">Price: High to Low</a></li>
+                        <li><a class="dropdown-item" href="#">Rating</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Results Grid -->
+            <div class="row g-4">
+                {% for product in products %}
+                <div class="col-md-4">
+                    <div class="product-card">
+                        {% if product.price > product.discounted_price %}
+                        <span class="discount-badge">
+                            {{ ((product.price - product.discounted_price) / product.price * 100) | int }}% OFF
+                        </span>
+                        {% endif %}
+                        <a href="{{ url_for('product_detail', product_id=product.id) }}">
+                            <div class="product-img">
+                                <img src="{{ product.image_url }}" alt="{{ product.name }}" class="img-fluid">
+                            </div>
+                        </a>
+                        <div class="card-body">
+                            <div class="product-rating mb-1">
+                                {% for i in range(5) %}
+                                    {% if i < product.rating | int %}
+                                    <i class="fas fa-star"></i>
+                                    {% elif i < product.rating %}
+                                    <i class="fas fa-star-half-alt"></i>
+                                    {% else %}
+                                    <i class="far fa-star"></i>
+                                    {% endif %}
+                                {% endfor %}
+                                <small class="text-muted ms-1">{{ product.rating }}</small>
+                            </div>
+                            <h6 class="product-title">{{ product.name }}</h6>
+                            <div class="product-price">
+                                <span class="text-warning">₹{{ product.discounted_price }}</span>
+                                {% if product.price > product.discounted_price %}
+                                <small class="old-price ms-2">₹{{ product.price }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="card-footer bg-white border-top-0 d-flex justify-content-between">
+                            <a href="{{ url_for('product_detail', product_id=product.id) }}" class="btn btn-sm btn-outline-secondary">Details</a>
+                            <form action="{{ url_for('add_to_cart', product_id=product.id) }}" method="POST">
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="btn btn-sm btn-warning">Add to Cart</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <!-- No Results Found -->
+    <div class="text-center py-5">
+        <i class="fas fa-search text-muted mb-3" style="font-size: 4rem;"></i>
+        <h4>No results found</h4>
+        <p class="text-muted">We couldn't find any products matching "{{ query }}".</p>
+        <div class="mt-4">
+            <p class="mb-2">Try:</p>
+            <ul class="list-unstyled">
+                <li>Using more general keywords</li>
+                <li>Checking your spelling</li>
+                <li>Looking in different categories</li>
+            </ul>
+        </div>
+        <a href="{{ url_for('home') }}" class="btn btn-outline-warning mt-3">Back to Home</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var applyFiltersBtn = document.getElementById('apply-filters-btn-search');
+        // Apply filters when the button is clicked
+        applyFiltersBtn.addEventListener('click', function() {
+            var currentUrl = new URL(window.location.href);
+            // Clear existing price, category, and discount parameters
+            currentUrl.searchParams.delete('min_price');
+            currentUrl.searchParams.delete('max_price');
+            currentUrl.searchParams.delete('price_range');
+            currentUrl.searchParams.delete('category');
+            currentUrl.searchParams.delete('discount');
+
+            // Add selected price ranges
+            document.querySelectorAll('.price-range-filter:checked').forEach(function(checkbox) {
+                currentUrl.searchParams.append('price_range', checkbox.value);
+            });
+            // Add selected categories
+            document.querySelectorAll('.category-filter:checked').forEach(function(checkbox) {
+                currentUrl.searchParams.append('category', checkbox.value);
+            });
+            // Add selected discount
+            document.querySelectorAll('.discount-filter:checked').forEach(function(checkbox) {
+                currentUrl.searchParams.append('discount', checkbox.value);
+            });
+            // Navigate to the updated URL
+            window.location.href = currentUrl.toString();
+        });
+    });
+</script>
+{% endblock %}

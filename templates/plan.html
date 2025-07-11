@@ -1,0 +1,276 @@
+{% extends 'base.html' %}
+
+{% block title %}Fitness Plans - GYM SUPPLEMENTS AND NUTRITION PRODUCT{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('home') }}" class="text-decoration-none">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Fitness Plans</li>
+        </ol>
+    </nav>
+
+    <h1 class="text-center mb-5">Fitness & Nutrition Plans</h1>
+
+    <!-- Plans Navigation Tabs -->
+    <ul class="nav nav-tabs mb-4" id="plansTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="workout-tab" data-bs-toggle="tab" data-bs-target="#workout" type="button" role="tab" aria-controls="workout" aria-selected="true">Workout Plans</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="nutrition-tab" data-bs-toggle="tab" data-bs-target="#nutrition" type="button" role="tab" aria-controls="nutrition" aria-selected="false">Nutrition Plans</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="custom-tab" data-bs-toggle="tab" data-bs-target="#custom" type="button" role="tab" aria-controls="custom" aria-selected="false">Custom Plan</button>
+        </li>
+    </ul>
+
+    <!-- Tab Content -->
+    <div class="tab-content" id="plansTabContent">
+        <!-- Workout Plans Tab -->
+        <div class="tab-pane fade show active" id="workout" role="tabpanel" aria-labelledby="workout-tab">
+            <div class="row g-4">
+                <!-- Muscle Building Plan -->
+                <div class="col-md-4">
+                    <div class="card h-100 plan-card">
+                        <div class="card-header bg-warning text-dark">
+                            <h4 class="mb-0">Muscle Building Plan</h4>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">8-Week Program</h5>
+                            <p class="card-text">A comprehensive program designed to maximize muscle growth and strength gains.</p>
+                            <ul class="list-group list-group-flush mb-4">
+                                <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i> 5 workouts per week</li>
+                                <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i> Progressive overload focus</li>
+                                <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i> Video demonstrations</li>
+                                <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i> Supplement recommendations</li>
+                            </ul>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">₹1,999</h5>
+                                <a href="#" class="btn btn-warning">View Plan</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weight Loss Plan -->
+                <div class="col-md-4">
+                    <div class="card h-100 plan-card">
+                        <div class="card-header bg-warning text-dark">
+                            <h4 class="mb-0">Weight Loss Plan</h4>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">12-Week Program</h5>
+                            <p class="card-text">A specialized program focused on fat loss while preserving lean muscle mass.</p>
+                            <ul class="list-group list-group-flush mb-4">
+                                <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i> 4 workouts per week</li>
+                                <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i> HIIT & circuit training</li>
+                                <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i> Progress tracking tools</li>
+                                <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i> Fat loss supplement guide</li>
+                            </ul>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">₹2,499</h5>
+                                <a href="#" class="btn btn-warning">View Plan</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Strength Training Plan -->
+                <div class="col-md-4">
+                    <div class="card h-100 plan-card">
+                        <div class="card-header bg-warning text-dark">
+                            <h4 class="mb-0">Strength Training Plan</h4>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">10-Week Program</h5>
+                            <p class="card-text">A dedicated program to increase your maximal strength and power output.</p>
+                            <ul class="list-group list-group-flush mb-4">
+                                <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i> 4 workouts per week</li>
+                                <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i> Focus on compound lifts</li>
+                                <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i> Form guidance videos</li>
+                                <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i> Recovery protocols</li>
+                            </ul>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">₹2,299</h5>
+                                <a href="#" class="btn btn-warning">View Plan</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nutrition Plans Tab -->
+        <div class="tab-pane fade" id="nutrition" role="tabpanel" aria-labelledby="nutrition-tab">
+            <div class="row g-4">
+                <!-- Weight Gain Diet -->
+                <div class="col-md-4">
+                    <div class="card h-100 plan-card">
+                        <div class="card-header bg-success text-white">
+                            <h4 class="mb-0">Weight Gain Diet</h4>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Bulking Plan</h5>
+                            <p class="card-text">A high-calorie nutrition plan designed to promote muscle growth and healthy weight gain.</p>
+                            <ul class="list-group list-group-flush mb-4">
+                                <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i> 3000-3500 calories per day</li>
+                                <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i> 6 balanced meals daily</li>
+                                <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i> High protein and complex carbs</li>
+                                <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i> Mass gainer supplement guide</li>
+                            </ul>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">₹1,499</h5>
+                                <a href="{{ url_for('weight_gain_diet') }}" class="btn btn-success">View Plan</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weight Loss Diet -->
+                <div class="col-md-4">
+                    <div class="card h-100 plan-card">
+                        <div class="card-header bg-success text-white">
+                            <h4 class="mb-0">Weight Loss Diet</h4>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Fat Loss Program</h5>
+                            <p class="card-text">A structured nutrition plan for sustainable fat loss without sacrificing energy or muscle.</p>
+                            <ul class="list-group list-group-flush mb-4">
+                                <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i> Calorie deficit of 500-750 kcal</li>
+                                <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i> High protein, moderate fat, low carb</li>
+                                <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i> Strategic carb cycling options</li>
+                                <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i> Fat burning supplement guide</li>
+                            </ul>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">₹1,699</h5>
+                                <a href="{{ url_for('weight_loss_diet') }}" class="btn btn-success">View Plan</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Six Pack Diet -->
+                <div class="col-md-4">
+                    <div class="card h-100 plan-card">
+                        <div class="card-header bg-success text-white">
+                            <h4 class="mb-0">Six Pack Diet</h4>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Abs Nutrition Plan</h5>
+                            <p class="card-text">A specialized diet plan focused on reducing body fat and revealing your abdominal muscles.</p>
+                            <ul class="list-group list-group-flush mb-4">
+                                <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i> Low body fat nutrition strategy</li>
+                                <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i> Targeted abdominal workout plan</li>
+                                <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i> Precise macro timing for fat loss</li>
+                                <li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i> Anti-bloating food guide</li>
+                            </ul>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">₹1,899</h5>
+                                <a href="{{ url_for('six_pack_diet') }}" class="btn btn-success">View Plan</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Custom Plan Tab -->
+        <div class="tab-pane fade" id="custom" role="tabpanel" aria-labelledby="custom-tab">
+            <div class="row">
+                <div class="col-lg-6 mx-auto">
+                    <div class="card shadow border-0">
+                        <div class="card-body p-5">
+                            <h4 class="text-center mb-4">Get Your Custom Fitness Plan</h4>
+                            <p class="text-center mb-4">Fill out the form below and our fitness experts will create a personalized plan tailored to your specific goals and needs.</p>
+
+                            <form>
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">Phone Number</label>
+                                    <input type="tel" class="form-control" id="phone">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="goal" class="form-label">Primary Goal</label>
+                                    <select class="form-select" id="goal" required>
+                                        <option value="" selected disabled>Select your goal</option>
+                                        <option value="muscle">Muscle Building</option>
+                                        <option value="weight-loss">Weight Loss</option>
+                                        <option value="strength">Strength Training</option>
+                                        <option value="fitness">General Fitness</option>
+                                        <option value="endurance">Endurance</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="experience" class="form-label">Fitness Experience</label>
+                                    <select class="form-select" id="experience" required>
+                                        <option value="" selected disabled>Select your experience level</option>
+                                        <option value="beginner">Beginner (0-1 years)</option>
+                                        <option value="intermediate">Intermediate (1-3 years)</option>
+                                        <option value="advanced">Advanced (3+ years)</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="details" class="form-label">Additional Details</label>
+                                    <textarea class="form-control" id="details" rows="4" placeholder="Tell us more about your goals, any health concerns, dietary preferences, etc."></textarea>
+                                </div>
+                                <div class="d-grid gap-2 mt-4">
+                                    <button type="submit" class="btn btn-warning btn-lg">Request Custom Plan</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .plan-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: none;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .plan-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .card-header {
+        padding: 1.25rem;
+    }
+
+    .list-group-item {
+        border-left: none;
+        border-right: none;
+    }
+
+    .list-group-item:first-child {
+        border-top: none;
+    }
+
+    .nav-tabs .nav-link {
+        color: #495057;
+        font-weight: 500;
+        padding: 0.75rem 1.5rem;
+    }
+
+    .nav-tabs .nav-link.active {
+        font-weight: 600;
+        color: #212529;
+        border-bottom: 3px solid #ffc107;
+    }
+</style>
+{% endblock %}

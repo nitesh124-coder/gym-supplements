@@ -1,0 +1,246 @@
+{% extends 'base.html' %}
+
+{% block title %}Weight Loss Diet Plan - GYM SUPPLEMENTS AND NUTRITION PRODUCT{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('home') }}" class="text-decoration-none">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('plan') }}" class="text-decoration-none">Plans</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Weight Loss Diet Plan</li>
+        </ol>
+    </nav>
+
+    <img src="{{ url_for('static', filename='images/weightloss.jpeg') }}" alt="Weight Loss Diet Plan" class="img-fluid mb-4 rounded">
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body p-4">
+                    <h1 class="fw-bold mb-3">Weight Loss Diet Plan</h1>
+                    <p class="lead">Here's a simple and effective weight loss diet plan designed to help reduce body fat while maintaining energy and preserving muscle. It's built around whole foods, portion control, and balanced macronutrients.</p>
+
+                    <div class="alert alert-info">
+                        <p class="mb-0"><strong>Note:</strong> This is general guidance — for personalized results, consult a nutritionist or fitness professional.</p>
+                    </div>
+
+                    <div class="mt-4">
+                        <h3 class="border-bottom pb-2">Key Principles for Weight Loss</h3>
+                        <ul class="list-group list-group-flush mb-4">
+                            <li class="list-group-item ps-0 border-0"><i class="fas fa-check-circle text-success me-2"></i> Calorie deficit (eat fewer calories than you burn)</li>
+                            <li class="list-group-item ps-0 border-0"><i class="fas fa-check-circle text-success me-2"></i> High protein intake (to maintain muscle and curb hunger)</li>
+                            <li class="list-group-item ps-0 border-0"><i class="fas fa-check-circle text-success me-2"></i> Moderate healthy fats</li>
+                            <li class="list-group-item ps-0 border-0"><i class="fas fa-check-circle text-success me-2"></i> Low sugar and refined carbs</li>
+                            <li class="list-group-item ps-0 border-0"><i class="fas fa-check-circle text-success me-2"></i> 4–6 smaller meals per day</li>
+                            <li class="list-group-item ps-0 border-0"><i class="fas fa-check-circle text-success me-2"></i> Stay hydrated (3–4 liters of water daily)</li>
+                        </ul>
+
+                        <h3 class="border-bottom pb-2 mt-5">Day 1 Sample Weight Loss Diet Plan</h3>
+
+                        <div class="meal-plan">
+                            <div class="meal-card">
+                                <h5><i class="fas fa-sun text-warning me-2"></i> Meal 1 (Breakfast)</h5>
+                                <ul class="meal-items">
+                                    <li>3 boiled eggs (or 2 eggs + 2 whites)</li>
+                                    <li>1 slice whole grain toast</li>
+                                    <li>Black coffee or green tea (no sugar)</li>
+                                </ul>
+                            </div>
+
+                            <div class="meal-card">
+                                <h5><i class="fas fa-apple-alt text-danger me-2"></i> Meal 2 (Mid-Morning Snack)</h5>
+                                <ul class="meal-items">
+                                    <li>1 apple or a handful of berries</li>
+                                    <li>5–6 almonds</li>
+                                </ul>
+                            </div>
+
+                            <div class="meal-card">
+                                <h5><i class="fas fa-utensils text-primary me-2"></i> Meal 3 (Lunch)</h5>
+                                <ul class="meal-items">
+                                    <li>Grilled chicken breast or tofu</li>
+                                    <li>1/2 cup brown rice or quinoa</li>
+                                    <li>Steamed vegetables (broccoli, spinach, zucchini)</li>
+                                </ul>
+                            </div>
+
+                            <div class="meal-card">
+                                <h5><i class="fas fa-apple-alt text-danger me-2"></i> Meal 4 (Snack)</h5>
+                                <ul class="meal-items">
+                                    <li>Greek yogurt (unsweetened) or 1 boiled egg</li>
+                                    <li>Green tea</li>
+                                </ul>
+                            </div>
+
+                            <div class="meal-card">
+                                <h5><i class="fas fa-moon text-secondary me-2"></i> Meal 5 (Dinner)</h5>
+                                <ul class="meal-items">
+                                    <li>Grilled fish or lentils</li>
+                                    <li>Mixed vegetable salad with lemon/olive oil</li>
+                                    <li>1 small sweet potato (optional)</li>
+                                </ul>
+                            </div>
+
+                            <div class="meal-card">
+                                <h5><i class="fas fa-dumbbell text-dark me-2"></i> Meal 6 (Optional – Post-Workout or Late Snack)</h5>
+                                <ul class="meal-items">
+                                    <li>Protein shake with water or almond milk</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3 class="border-bottom pb-2 mt-5">Foods to Focus On</h3>
+
+                        <div class="row mt-4">
+                            <div class="col-md-6 mb-4">
+                                <div class="food-category-card">
+                                    <h5><i class="fas fa-drumstick-bite me-2 text-danger"></i> Proteins</h5>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-angle-right me-2"></i>Eggs</li>
+                                        <li><i class="fas fa-angle-right me-2"></i>Chicken breast</li>
+                                        <li><i class="fas fa-angle-right me-2"></i>Turkey</li>
+                                        <li><i class="fas fa-angle-right me-2"></i>Fish</li>
+                                        <li><i class="fas fa-angle-right me-2"></i>Tofu</li>
+                                        <li><i class="fas fa-angle-right me-2"></i>Legumes</li>
+                                        <li><i class="fas fa-angle-right me-2"></i>Low-fat dairy</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <div class="food-category-card">
+                                    <h5><i class="fas fa-bread-slice me-2 text-warning"></i> Carbs (limit to earlier meals)</h5>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-angle-right me-2"></i>Oats</li>
+                                        <li><i class="fas fa-angle-right me-2"></i>Brown rice</li>
+                                        <li><i class="fas fa-angle-right me-2"></i>Quinoa</li>
+                                        <li><i class="fas fa-angle-right me-2"></i>Sweet potato</li>
+                                        <li><i class="fas fa-angle-right me-2"></i>Fruits</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <div class="food-category-card">
+                                    <h5><i class="fas fa-seedling me-2 text-success"></i> Healthy Fats</h5>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-angle-right me-2"></i>Olive oil</li>
+                                        <li><i class="fas fa-angle-right me-2"></i>Avocado</li>
+                                        <li><i class="fas fa-angle-right me-2"></i>Nuts</li>
+                                        <li><i class="fas fa-angle-right me-2"></i>Seeds</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <div class="food-category-card">
+                                    <h5><i class="fas fa-carrot me-2 text-success"></i> Vegetables</h5>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-angle-right me-2"></i>Leafy greens</li>
+                                        <li><i class="fas fa-angle-right me-2"></i>Cauliflower</li>
+                                        <li><i class="fas fa-angle-right me-2"></i>Bell peppers</li>
+                                        <li><i class="fas fa-angle-right me-2"></i>Cucumbers</li>
+                                        <li><i class="fas fa-angle-right me-2"></i>Carrots</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body">
+                    <h4 class="fw-bold mb-3">Plan Benefits</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i>Sustainable fat loss</li>
+                        <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i>Preserved muscle mass</li>
+                        <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i>Improved energy levels</li>
+                        <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i>Better digestive health</li>
+                        <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i>Enhanced overall well-being</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm mb-4 bg-success text-white">
+                <div class="card-body text-center py-4">
+                    <h3 class="fw-bold mb-3">Get This Plan</h3>
+                    <p class="mb-3">Complete 7-day diet plan with shopping lists and recipes</p>
+                    <h4 class="fw-bold mb-3">₹1,699</h4>
+                    <a href="{{ url_for('purchase_plan', plan_name='Weight Loss') }}" class="btn btn-light btn-lg w-100">Purchase Now</a>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body">
+                    <h4 class="fw-bold mb-3">Need Help?</h4>
+                    <p>Our nutrition experts can help customize this plan for your specific needs and goals.</p>
+                    <a href="#" class="btn btn-outline-success w-100">Contact a Nutritionist</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .meal-plan {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .meal-card {
+        padding: 1.25rem;
+        border-radius: 8px;
+        background-color: #f8f9fa;
+        border-left: 4px solid #28a745;
+    }
+
+    .meal-card h5 {
+        color: #333;
+        margin-bottom: 0.75rem;
+    }
+
+    .meal-items {
+        list-style: none;
+        padding-left: 0;
+        margin-bottom: 0;
+    }
+
+    .meal-items li {
+        padding: 0.4rem 0;
+        position: relative;
+        padding-left: 1.25rem;
+    }
+
+    .meal-items li:before {
+        content: "•";
+        color: #28a745;
+        position: absolute;
+        left: 0;
+        font-weight: bold;
+    }
+
+    .food-category-card {
+        padding: 1.25rem;
+        border-radius: 8px;
+        background-color: #f8f9fa;
+        height: 100%;
+    }
+
+    .food-category-card h5 {
+        border-bottom: 1px solid #dee2e6;
+        padding-bottom: 0.75rem;
+        margin-bottom: 1rem;
+    }
+
+    .food-category-card ul li {
+        padding: 0.3rem 0;
+    }
+</style>
+{% endblock %}

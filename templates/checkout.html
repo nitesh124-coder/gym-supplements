@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% block title %}Checkout - GYM SUPPLEMENTS AND NUTRITION PRODUCT{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('home') }}" class="text-decoration-none">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('cart') }}" class="text-decoration-none">Shopping Cart</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+        </ol>
+    </nav>
+
+    <h2 class="mb-4">Checkout</h2>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">Order Details</h5>
+                </div>
+                <div class="card-body">
+                    {% if cart_items %}
+                        {% for item in cart_items %}
+                            <div class="row align-items-center mb-3 pb-3 border-bottom">
+                                <div class="col-md-2">
+                                    <div class="cart-item-img" style="max-width: 80px;">
+                                        <img src="{{ item.product.image_url }}" class="img-fluid rounded" alt="{{ item.product.name }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6 class="mb-0">{{ item.product.name }}</h6>
+                                    <small class="text-muted">Quantity: {{ item.quantity }}</small>
+                                </div>
+                                <div class="col-md-4 text-end">
+                                    <span class="fw-bold">₹{{ (item.product.discounted_price * item.quantity)|round(2) }}</span>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-center">Your cart is empty.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">Shipping Information</h5>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="fullName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="fullName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Address</label>
+                            <input type="text" class="form-control" id="address" placeholder="Street Address, Apartment, Suite" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="city" class="form-label">City</label>
+                                <input type="text" class="form-control" id="city" required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="state" class="form-label">State</label>
+                                <input type="text" class="form-control" id="state" required>
+                            </div>
+                            <div class="col-md-2 mb-3">
+                                <label for="zip" class="form-label">Zip Code</label>
+                                <input type="text" class="form-control" id="zip" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone">
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">Payment Method</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Placeholder for payment method selection -->
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="radio" name="paymentMethod" id="creditCard" checked>
+                        <label class="form-check-label" for="creditCard">
+                            Credit/Debit Card (Placeholder)
+                        </label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="radio" name="paymentMethod" id="paypal">
+                        <label class="form-check-label" for="paypal">
+                            PayPal (Placeholder)
+                        </label>
+                    </div>
+                     <div class="form-check mb-2">
+                        <input class="form-check-input" type="radio" name="paymentMethod" id="cod">
+                        <label class="form-check-label" for="cod">
+                            Cash on Delivery (Placeholder)
+                        </label>
+                    </div>
+                    <p class="text-muted mt-3 mb-0">* Actual payment processing is not enabled in this demo.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">Order Summary</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Subtotal:</span>
+                        <span>₹{{ total }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                         <span>Shipping:</span>
+                        <span>{% if total >= 499 %}Free{% else %}₹50{% endif %}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Tax (18%):</span>
+                        <span>₹{{ (total * 0.18)|round(2) }}</span>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between mb-4">
+                        <strong>Order Total:</strong>
+                         <strong>₹{{ (total + (total * 0.18) + (0 if total >= 499 else 50))|round(2) }}</strong>
+                    </div>
+
+                    <form action="{{ url_for('place_order') }}" method="POST">
+                         <!-- Include necessary hidden inputs for order processing if needed -->
+                         <button type="submit" class="btn btn-danger w-100">Confirm Order</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

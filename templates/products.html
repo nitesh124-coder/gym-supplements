@@ -1,0 +1,376 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ category|title }} Products - GYM SUPPLEMENTS AND NUTRITION PRODUCT{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nouislider/15.7.0/nouislider.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('home') }}" class="text-decoration-none">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ category|title }}</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <!-- Filters Sidebar -->
+        <div class="col-lg-3">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">Filters</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Price Range -->
+                    <div class="mb-4">
+                        <h6 class="mb-3">Price Range</h6>
+                        <div id="price-slider"></div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <span id="price-range-min">₹0</span>
+                            <span id="price-range-max">₹5000</span>
+                        </div>
+                        <!-- Fallback price inputs -->
+                        <div id="price-inputs" class="mt-3" style="display: none;">
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <label class="form-label small">Min Price</label>
+                                    <input type="number" class="form-control form-control-sm" id="min-price-input"
+                                           value="{{ request.args.get('min_price', 0) }}" min="0" max="5000" step="10">
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label small">Max Price</label>
+                                    <input type="number" class="form-control form-control-sm" id="max-price-input"
+                                           value="{{ request.args.get('max_price', 5000) }}" min="0" max="5000" step="10">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <!-- Brand Filter -->
+                    <div class="mb-4">
+                        <h6 class="mb-3">Brand</h6>
+                        <div id="brand-filters">
+                            {% for brand in available_brands %}
+                            <div class="form-check mb-2">
+                                <input class="form-check-input brand-filter" type="checkbox" id="brand-{{ loop.index }}" value="{{ brand }}"{% if brand in request.args.getlist('brand') %} checked{% endif %}>
+                                <label class="form-check-label" for="brand-{{ loop.index }}">{{ brand }}</label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    {% if category != 'accessories' %}
+                    <hr>
+
+                    <!-- Flavor Filter -->
+                    <div class="mb-4">
+                        <h6 class="mb-3">Flavor</h6>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="flavor1">
+                            <label class="form-check-label" for="flavor1">Chocolate</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="flavor2">
+                            <label class="form-check-label" for="flavor2">Vanilla</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="flavor3">
+                            <label class="form-check-label" for="flavor3">Strawberry</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="flavor4">
+                            <label class="form-check-label" for="flavor4">Cookies & Cream</label>
+                        </div>
+                    </div>
+                    {% else %}
+                    <hr>
+
+                    <!-- Type Filter for Accessories -->
+                    <div class="mb-4">
+                        <h6 class="mb-3">Type</h6>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input type-filter" type="checkbox" id="type-bottles" value="bottles"{% if 'bottles' in request.args.getlist('type') %} checked{% endif %}>
+                            <label class="form-check-label" for="type-bottles">Water Bottles</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input type-filter" type="checkbox" id="type-bags" value="bag"{% if 'bag' in request.args.getlist('type') %} checked{% endif %}>
+                            <label class="form-check-label" for="type-bags">Gym Bags</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input type-filter" type="checkbox" id="type-apparel" value="tshirt"{% if 'tshirt' in request.args.getlist('type') %} checked{% endif %}>
+                            <label class="form-check-label" for="type-apparel">T-Shirts</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input type-filter" type="checkbox" id="type-shorts" value="shorts"{% if 'shorts' in request.args.getlist('type') %} checked{% endif %}>
+                            <label class="form-check-label" for="type-shorts">Shorts</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input type-filter" type="checkbox" id="type-shoes" value="shoes"{% if 'shoes' in request.args.getlist('type') %} checked{% endif %}>
+                            <label class="form-check-label" for="type-shoes">Shoes</label>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <hr>
+
+                    <!-- Discount Filter -->
+                    <div class="mb-4">
+                        <h6 class="mb-3">Discount</h6>
+                        <div id="discount-filters">
+                            <div class="form-check mb-2">
+                                <input class="form-check-input discount-filter" type="checkbox" id="discount-10" value="10"{% if '10' in request.args.getlist('discount') %} checked{% endif %}>
+                                <label class="form-check-label" for="discount-10">10% and above</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input discount-filter" type="checkbox" id="discount-20" value="20"{% if '20' in request.args.getlist('discount') %} checked{% endif %}>
+                                <label class="form-check-label" for="discount-20">20% and above</label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input discount-filter" type="checkbox" id="discount-30" value="30"{% if '30' in request.args.getlist('discount') %} checked{% endif %}>
+                                <label class="form-check-label" for="discount-30">30% and above</label>
+                            </div>
+                             {# Add more discount options if needed #}
+                        </div>
+                    </div>
+
+                    <button id="apply-filters-btn" class="btn btn-danger w-100">
+                        <i class="fas fa-filter me-2"></i>Apply Filters
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="col-lg-9">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3>{{ category|title }} Products ({{ products|length }})</h3>
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        Sort By
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Popularity</a></li>
+                        <li><a class="dropdown-item" href="#">Price: Low to High</a></li>
+                        <li><a class="dropdown-item" href="#">Price: High to Low</a></li>
+                        <li><a class="dropdown-item" href="#">Rating</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="row g-4">
+                {% for product in products %}
+                <div class="col-md-4">
+                    <div class="product-card">
+                        {% if product.price > product.discounted_price %}
+                        <span class="discount-badge">
+                            {{ ((product.price - product.discounted_price) / product.price * 100) | int }}% OFF
+                        </span>
+                        {% endif %}
+                        <a href="{{ url_for('product_detail', product_id=product.id) }}">
+                            <div class="product-img">
+                                <img src="{{ product.image_url }}" class="img-fluid" alt="{{ product.name }}">
+                            </div>
+                        </a>
+                        <div class="card-body">
+                            <div class="product-rating mb-1">
+                                {% for i in range(5) %}
+                                    {% if i < product.rating | int %}
+                                    <i class="fas fa-star"></i>
+                                    {% elif i < product.rating %}
+                                    <i class="fas fa-star-half-alt"></i>
+                                    {% else %}
+                                    <i class="far fa-star"></i>
+                                    {% endif %}
+                                {% endfor %}
+                                <small class="text-muted ms-1">{{ product.rating }}</small>
+                            </div>
+                            <h6 class="product-title">{{ product.name }}</h6>
+                            <div class="product-price">
+                                <span class="text-danger">₹{{ product.discounted_price }}</span>
+                                {% if product.price > product.discounted_price %}
+                                <small class="old-price ms-2">₹{{ product.price }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="card-footer bg-white border-top-0">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="{{ url_for('product_detail', product_id=product.id) }}" class="btn btn-sm btn-outline-secondary">Details</a>
+                                <div class="d-flex gap-1">
+                                    <!-- Add to Wishlist -->
+                                    <form action="{{ url_for('add_to_wishlist', product_id=product.id) }}" method="POST" class="wishlist-form">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Add to Wishlist">
+                                            <i class="fas fa-heart"></i>
+                                        </button>
+                                    </form>
+                                    <!-- Add to Cart -->
+                                    <form action="{{ url_for('add_to_cart', product_id=product.id) }}" method="POST">
+                                        <input type="hidden" name="quantity" value="1">
+                                        <button type="submit" class="btn btn-sm btn-danger">Add to Cart</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- If no products found -->
+            {% if products|length == 0 %}
+            <div class="text-center py-5">
+                <i class="fas fa-box-open text-muted mb-3" style="font-size: 4rem;"></i>
+                <h4>No products found</h4>
+                <p class="text-muted">We couldn't find any products in this category.</p>
+                <a href="{{ url_for('home') }}" class="btn btn-outline-danger mt-3">Back to Home</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/nouislider/15.7.0/nouislider.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Filter script loaded');
+
+        var priceSlider = document.getElementById('price-slider');
+        var priceRangeMin = document.getElementById('price-range-min');
+        var priceRangeMax = document.getElementById('price-range-max');
+        var applyFiltersBtn = document.getElementById('apply-filters-btn');
+
+        if (!priceSlider) {
+            console.error('Price slider element not found');
+            return;
+        }
+
+        // Get current min/max price from URL if they exist
+        var urlParams = new URLSearchParams(window.location.search);
+        var currentMinPrice = parseFloat(urlParams.get('min_price')) || 0;
+        var currentMaxPrice = parseFloat(urlParams.get('max_price')) || 5000;
+
+        console.log('Current price range:', currentMinPrice, '-', currentMaxPrice);
+
+        try {
+            noUiSlider.create(priceSlider, {
+                start: [currentMinPrice, currentMaxPrice], // Set initial values
+                connect: true,
+                range: {
+                    'min': 0,
+                    'max': 5000
+                },
+                step: 10,
+                format: { // Format for displaying and setting values
+                    to: function(value) {
+                        return '₹' + Math.round(value);
+                    },
+                    from: function(value) {
+                        return Number(value.replace('₹', ''));
+                    }
+                }
+            });
+
+            // Update price range display when slider values change
+            priceSlider.noUiSlider.on('update', function(values, handle) {
+                if (priceRangeMin) priceRangeMin.innerHTML = values[0];
+                if (priceRangeMax) priceRangeMax.innerHTML = values[1];
+            });
+
+            console.log('Price slider initialized successfully');
+        } catch (error) {
+            console.error('Error initializing price slider:', error);
+            // Fallback: hide the slider and show simple inputs
+            priceSlider.style.display = 'none';
+            var priceInputs = document.getElementById('price-inputs');
+            if (priceInputs) {
+                priceInputs.style.display = 'block';
+            }
+        }
+
+        // Apply filters when the button is clicked
+        if (applyFiltersBtn) {
+            applyFiltersBtn.addEventListener('click', function() {
+                console.log('Apply filters button clicked');
+
+                try {
+                    var currentUrl = new URL(window.location.href);
+                    console.log('Current URL:', currentUrl.toString());
+
+                    // Clear existing price, brand, and discount parameters
+                    currentUrl.searchParams.delete('min_price');
+                    currentUrl.searchParams.delete('max_price');
+                    currentUrl.searchParams.delete('brand');
+                    currentUrl.searchParams.delete('discount');
+
+                    // Add selected price range
+                    var minPrice, maxPrice;
+                    if (priceSlider.noUiSlider) {
+                        var minMax = priceSlider.noUiSlider.get();
+                        minPrice = minMax[0].replace('₹', '');
+                        maxPrice = minMax[1].replace('₹', '');
+                    } else {
+                        // Use fallback inputs
+                        var minPriceInput = document.getElementById('min-price-input');
+                        var maxPriceInput = document.getElementById('max-price-input');
+                        minPrice = minPriceInput ? minPriceInput.value : 0;
+                        maxPrice = maxPriceInput ? maxPriceInput.value : 5000;
+                    }
+
+                    currentUrl.searchParams.set('min_price', minPrice);
+                    currentUrl.searchParams.set('max_price', maxPrice);
+                    console.log('Price range set:', minPrice, '-', maxPrice);
+
+                    // Add selected brands
+                    var selectedBrands = [];
+                    document.querySelectorAll('.brand-filter:checked').forEach(function(checkbox) {
+                        currentUrl.searchParams.append('brand', checkbox.value);
+                        selectedBrands.push(checkbox.value);
+                    });
+                    console.log('Selected brands:', selectedBrands);
+
+                    // Add selected discount
+                    var selectedDiscounts = [];
+                    document.querySelectorAll('.discount-filter:checked').forEach(function(checkbox) {
+                        currentUrl.searchParams.append('discount', checkbox.value);
+                        selectedDiscounts.push(checkbox.value);
+                    });
+                    console.log('Selected discounts:', selectedDiscounts);
+
+                    console.log('New URL:', currentUrl.toString());
+
+                    // Navigate to the updated URL
+                    window.location.href = currentUrl.toString();
+                } catch (error) {
+                    console.error('Error applying filters:', error);
+                }
+            });
+        } else {
+            console.error('Apply filters button not found');
+        }
+
+        // Add clear filters functionality
+        var clearFiltersBtn = document.createElement('button');
+        clearFiltersBtn.innerHTML = '<i class="fas fa-times me-2"></i>Clear Filters';
+        clearFiltersBtn.className = 'btn btn-outline-secondary w-100 mt-2';
+        clearFiltersBtn.addEventListener('click', function() {
+            var currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.delete('min_price');
+            currentUrl.searchParams.delete('max_price');
+            currentUrl.searchParams.delete('brand');
+            currentUrl.searchParams.delete('discount');
+            window.location.href = currentUrl.toString();
+        });
+
+        if (applyFiltersBtn && applyFiltersBtn.parentNode) {
+            applyFiltersBtn.parentNode.appendChild(clearFiltersBtn);
+        }
+    });
+</script>
+{% endblock %}
